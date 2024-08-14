@@ -1,24 +1,18 @@
-const { twitterAccounts, timeInterval } = require('./config');
+const { twitterAccounts, ticker, timeInterval } = require('./config');
 const { scrapeTwitterAccount, countTickerMentions } = require('./scraper');
 
 /**
- * Scrape all Twitter accounts and count mentions of stock symbols.
+ * Scrape all Twitter accounts and count mentions of the stock symbol.
  */
 async function scrapeAllAccounts() {
-    const aggregatedMentions = {};
+    let totalMentions = 0;
 
     for (const account of twitterAccounts) {
         const tweets = await scrapeTwitterAccount(account);
-        const mentions = countTickerMentions(tweets);
-
-        for (const [ticker, count] of Object.entries(mentions)) {
-            aggregatedMentions[ticker] = (aggregatedMentions[ticker] || 0) + count;
-        }
+        totalMentions += countTickerMentions(tweets, ticker);
     }
 
-    for (const [stockSymbol, totalMentions] of Object.entries(aggregatedMentions)) {
-        console.log(`'${stockSymbol}' was mentioned '${totalMentions}' times in the last '${timeInterval}' minutes.`);
-    }
+    console.log(`'${ticker}' was mentioned '${totalMentions}' times in the last '${timeInterval}' minutes.`);
 }
 
 module.exports = { scrapeAllAccounts };

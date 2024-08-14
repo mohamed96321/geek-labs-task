@@ -11,5 +11,6 @@ module.exports = {
       'https://twitter.com/Barchart',
       'https://twitter.com/RoyLMattox'
   ],
+  ticker: '$TSLA',
   timeInterval: 15
 };
