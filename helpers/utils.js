@@ -16,9 +16,8 @@ async function scrapeAllAccounts() {
         }
     }
 
-    console.log('Stock symbol mentions in the last', timeInterval, 'minutes:');
-    for (const [ticker, count] of Object.entries(aggregatedMentions)) {
-        console.log(`${ticker}: ${count} mentions`);
+    for (const [stockSymbol, totalMentions] of Object.entries(aggregatedMentions)) {
+        console.log(`'${stockSymbol}' was mentioned '${totalMentions}' times in the last '${timeInterval}' minutes.`);
     }
 }
 
